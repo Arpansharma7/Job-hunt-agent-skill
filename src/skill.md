@@ -244,22 +244,14 @@ user knows it was checked.
 (default `http://127.0.0.1:9222`). If nothing is listening there, every call
 fails with a connection error. To make the backend available:
 
-1. Pick a Chromium binary: bundled Playwright Chromium at
-   `C:/Users/<user>/AppData/Local/ms-playwright/chromium-XXXX/chrome-win/chrome.exe`,
-   or system Chrome at
-   `C:/Program Files/Google/Chrome/Application/chrome.exe`.
+1. Pick a Chromium binary: bundled Playwright Chromium or system Chrome
 2. Launch it (headless is fine) with CDP on 9222, using a **native Windows
-   path** for the profile dir (MSYS-style `/d/...` paths get mangled and the
-   profile fails to create — a silent failure that leaves no CDP listener):
-   ```
-   chrome.exe --headless=new --remote-debugging-port=9222 \
-     --user-data-dir="D:/07_hermes_home/cache/browser-use/cdp-profile" \
-     --no-first-run --no-default-browser-check --disable-gpu about:blank
-   ```
+   path** for the profile dir
    Keep this process running for the whole Hermes session.
-3. Verify before searching:
+   
+4. Verify before searching:
    - `python -c "import socket;s=socket.socket();s.settimeout(3);s.connect(('127.0.0.1',9222));print('OK')"`
-   - `/d/07_hermes_home/bin/browser-use doctor` should report `chrome running`
+   - `~/bin/browser-use doctor` should report `chrome running`
      and `daemon alive`.
    - A real `browser_exec` run that returns page text (not a connection
      error) confirms the fix.
